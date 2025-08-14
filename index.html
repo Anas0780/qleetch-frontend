@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>ڤليتش 🙂</title>
+  <link rel="icon" href="smile.png" type="image/png" />
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f7f9fc;
+      color: #1a1a1a;
+      overflow-x: hidden;
+      direction: rtl;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      align-items: center;
+      padding: 12px 15px;
+      background: white;
+      border-bottom: 1px solid #e0e0e0;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #1d78d6;
+    }
+
+    .logo img {
+      width: 28px;
+      height: 28px;
+    }
+
+    .icons {
+      display: flex;
+      gap: 20px;
+      font-size: 1.8rem;
+      margin-right: auto;
+      cursor: pointer;
+    }
+
+    /* Chat Area */
+    .chat-area {
+      height: calc(100vh - 120px);
+      max-width: 1200px;
+      margin: 10px auto;
+      padding: 15px;
+      overflow-y: auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    .message {
+      margin-bottom: 12px;
+      padding: 10px 14px;
+      border-radius: 16px;
+      background: #e3f2fd;
+      max-width: 80%;
+      word-wrap: break-word;
+    }
+
+    /* Input Area */
+    .input-area {
+      display: flex;
+      padding: 12px;
+      background: white;
+      border-top: 1px solid #e0e0e0;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      z-index: 5;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+    }
+
+    .input-area input {
+      flex: 1;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 24px;
+      margin: 0 8px;
+      font-size: 1rem;
+    }
+
+    .input-area button {
+      padding: 0 18px;
+      background: #1d78d6;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .input-area input[type="file"] {
+      display: none;
+    }
+
+    .file-btn {
+      background: #ff6b35;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 24px;
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
+
+    /* Media Preview */
+    .media-preview {
+      max-width: 100%;
+      max-height: 300px;
+      border-radius: 12px;
+      margin: 8px 0;
+      display: block;
+    }
+
+    /* Sidebars */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 80%;
+      height: 100%;
+      max-width: 320px;
+      background: white;
+      padding: 20px;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      z-index: 100;
+      box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+      overflow-y: auto;
+    }
+
+    .sidebar.active {
+      transform: translateX(0);
+    }
+
+    .close-btn {
+      font-size: 1.8rem;
+      cursor: pointer;
+      text-align: left;
+      margin-bottom: 16px;
+    }
+
+    .user-item {
+      padding: 12px;
+      border-bottom: 1px solid #eee;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .user-item:hover {
+      background: #f0f0f0;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 600px) {
+      .logo {
+        font-size: 1.1rem;
+      }
+
+      .logo img {
+        width: 24px;
+        height: 24px;
+      }
+
+      .icons {
+        font-size: 1.6rem;
+        gap: 16px;
+      }
+
+      .chat-area {
+        margin: 10px 8px;
+        padding: 12px;
+        border-radius: 10px;
+      }
+
+      .message {
+        font-size: 0.95rem;
+        padding: 8px 12px;
+      }
+
+      .input-area {
+        padding: 10px;
+      }
+
+      .input-area input {
+        padding: 10px;
+        font-size: 0.95rem;
+      }
+
+      .input-area button {
+        padding: 0 14px;
+        font-size: 0.95rem;
+      }
+
+      .sidebar {
+        width: 90%;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .input-area {
+        position: static;
+        margin: 0 auto;
+        max-width: 1200px;
+        border-radius: 0 0 12px 12px;
+      }
+
+      .chat-area {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+    }
+
+    /* إذا كانت الشاشة صغيرة جدًا */
+    @media (max-height: 500px) {
+      .chat-area {
+        height: calc(100vh - 100px);
+      }
+
+      .input-area {
+        padding: 8px;
+      }
+
+      .input-area input {
+        padding: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- الشعار -->
+  <header>
+    <div class="logo">
+      <img src="../assets/smile.png" alt="الوجو" />
+      <span>ڤليتش</span>
+    </div>
+    <div class="icons">
+      <span id="users-btn">⋮</span>
+      <span id="groups-btn">☰</span>
+    </div>
+  </header>
+
+  <!-- قائمة المستخدمين -->
+  <div id="users-sidebar" class="sidebar">
+    <div class="close-btn" onclick="closeSidebar('users')">✕</div>
+    <h3>المستخدمون</h3>
+    <div id="users-list">
+      <div class="user-item" onclick="startChat('أحمد')">👤 أحمد</div>
+      <div class="user-item" onclick="startChat('سارة')">👤 سارة</div>
+      <div class="user-item" onclick="startChat('محمد')">👤 محمد</div>
+    </div>
+  </div>
+
+  <!-- قائمة الأصدقاء والمجموعات -->
+  <div id="groups-sidebar" class="sidebar">
+    <div class="close-btn" onclick="closeSidebar('groups')">✕</div>
+    <h3>أصدقائي</h3>
+    <div class="user-item">👤 سارة</div>
+    <div class="user-item">👤 أحمد</div>
+    <h3>مجموعاتي</h3>
+    <div class="user-item">👥 مدرستنا</div>
+    <div class="user-item">👥 الأصدقاء</div>
+  </div>
+
+  <!-- منطقة الدردشة -->
+  <div class="chat-area" id="chat-area">
+    <div class="message">مرحباً! هذا أول يوم لنا في ڤليتش 🙂</div>
+  </div>
+
+  <!-- حقل الإرسال -->
+  <div class="input-area">
+    <input type="text" id="message-input" placeholder="اكتب رسالة..." />
+    <input type="file" id="media-input" accept="image/*,video/*" />
+    <label for="media-input" class="file-btn">📎</label>
+    <button onclick="sendMessage()">إرسال</button>
+  </div>
+
+  <!-- Socket.IO -->
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script>
+    // استخدم الرابط الخاص بك من Render
+    const socket = io("https://qleetch-backend.onrender.com");
+
+    const chatArea = document.getElementById("chat-area");
+    const messageInput = document.getElementById("message-input");
+
+    function sendMessage() {
+      const text = messageInput.value.trim();
+      if (text) {
+        socket.emit("send-message", { text });
+        addMessage(text, "أنا");
+        messageInput.value = "";
+      }
+
+      const file = document.getElementById("media-input").files[0];
+      if (file) {
+        uploadMedia(file);
+        document.getElementById("media-input").value = ""; // مسح الملف
+      }
+    }
+
+    function uploadMedia(file) {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "your_cloudinary_preset"); // ← عدلها
+
+      const url = `https://api.cloudinary.com/v1_1/your_cloud_name/${file.type.startsWith('image') ? 'image' : 'video'}/upload`;
+
+      fetch(url, {
+        method: "POST",
+        body: formData
+      })
+      .then(res => res.json())
+      .then(data => {
+        const mediaUrl = data.secure_url;
+        socket.emit("send-message", { 
+          media: mediaUrl, 
+          type: file.type.split("/")[0] 
+        });
+        addMediaMessage(mediaUrl, file.type.split("/")[0]);
+      })
+      .catch(err => {
+        console.error("خطأ في الرفع:", err);
+        addMessage("فشل رفع الملف.", "النظام");
+      });
+    }
+
+    function addMessage(text, sender) {
+      const div = document.createElement("div");
+      div.className = "message";
+      div.innerHTML = `<strong>${sender}:</strong> ${text}`;
+      chatArea.appendChild(div);
+      scrollToBottom();
+    }
+
+    function addMediaMessage(url, type) {
+      const div = document.createElement("div");
+      div.className = "message";
+
+      if (type === "image") {
+        div.innerHTML = `<img src="${url}" class="media-preview" alt="صورة" />`;
+      } else if (type === "video") {
+        div.innerHTML = `<video controls class="media-preview"><source src="${url}" type="video/mp4">متصفحك لا يدعم الفيديو.</video>`;
+      } else {
+        div.innerHTML = `<a href="${url}" target="_blank" style="color:#1d78d6">📁 عرض الملف</a>`;
+      }
+
+      chatArea.appendChild(div);
+      scrollToBottom();
+    }
+
+    function scrollToBottom() {
+      chatArea.scrollTop = chatArea.scrollHeight;
+    }
+
+    socket.on("receive-message", (msg) => {
+      if (msg.text) add
